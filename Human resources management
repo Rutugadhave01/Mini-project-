@@ -1,0 +1,92 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+class Employee {
+public:
+    int id;
+    string name;
+    string position;
+
+    Employee(int empId, string empName, string empPosition)
+        : id(empId), name(empName), position(empPosition) {}
+};
+
+class HRManagement {
+private:
+    vector<Employee> employees;
+
+public:
+    void addEmployee(int id, const string& name, const string& position) {
+        employees.emplace_back(id, name, position);
+    }
+
+    void displayEmployees() const {
+        if (employees.empty()) {
+            cout << "No employees to display.\n";
+            return;
+        }
+        cout << "Employee List:\n";
+        for (const auto& emp : employees) {
+          cout << "ID: " << emp.id << ", Name: " << emp.name << ", Position: " << emp.position << '\n';
+        }
+    }
+
+    void searchEmployee(int id) const {
+        for (const auto& emp : employees) {
+            if (emp.id == id) {
+                cout << "Employee Found: ID: " << emp.id << ", Name: " << emp.name << ", Position: " << emp.position << '\n';
+                return;
+            }
+        }
+        cout << "Employee with ID " << id << " not found.\n";
+    }
+};
+
+int main() {
+    HRManagement hr;
+
+    int choice;
+    do {
+        cout << "\nHR Management System\n";
+        cout << "1. Add Employee\n";
+        cout << "2. Display Employees\n";
+        cout << "3. Search Employee\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int id;
+               string name, position;
+               cout << "Enter Employee ID: ";
+               cin >> id;
+               cout << "Enter Employee Name: ";
+                cin >> name;
+                cout << "Enter Employee Position: ";
+                cin >> position;
+                hr.addEmployee(id, name, position);
+                break;
+            }
+            case 2:
+                hr.displayEmployees();
+                break;
+            case 3: {
+                int id;
+                cout << "Enter Employee ID to search: ";
+                cin >> id;
+                hr.searchEmployee(id);
+                break;
+            }
+            case 4:
+                cout << "Exiting...\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice != 4);
+
+    return 0;
+}
